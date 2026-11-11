@@ -355,12 +355,13 @@
     var today = Date.UTC(p.year, p.month - 1, p.day);
     var best = null;
     hol.items.forEach(function (it, i) {
-      for (var y = p.year; y <= p.year + 1; y++) {
+      for (var y = p.year - 1; y <= p.year + 1; y++) {
         var st = it.easter ? easter(y, it.easter) : it.start;
         if (!st) return;
         var en = it.end || st;
         var sMs = Date.UTC(y, st[0] - 1, st[1]);
-        var eMs = Date.UTC(en[0] < st[0] ? y + 1 : y, en[0] - 1, en[1]);
+        var eMs = it.easterDays ? sMs + (it.easterDays - 1) * 864e5
+                                : Date.UTC(en[0] < st[0] ? y + 1 : y, en[0] - 1, en[1]);
         if (eMs >= today) {
           if (!best || sMs < best.s) best = { i: i, s: sMs, now: sMs <= today };
           return;
