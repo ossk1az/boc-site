@@ -15,7 +15,7 @@ window.content = {
 
   /* ---------- ССЫЛКИ И АДРЕСА ---------- */
   links: {
-    discord: "<ЗАПОЛНИТЬ: ссылка на Discord>",          // например "https://discord.gg/xxxxxx"
+    discord: "https://discord.gg/6AzDWFs2Xu",
     client: "<ЗАПОЛНИТЬ: ссылка на клиент / ClassicUO>", // ссылка на скачивание клиента
     server: "<ЗАПОЛНИТЬ: адрес>:<порт>"                  // например "play.example.com:2593"
   },
