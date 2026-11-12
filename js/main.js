@@ -85,6 +85,10 @@
       '</div>' +
     '</div></section>';
 
+  // Сервер сейчас (заполняется из stats.json)
+  html += section('live', '', head(c.live, 'live') +
+    '<div class="live" id="live-body" aria-live="polite"><p class="live__msg">' + esc(c.live.loading) + '</p></div>');
+
   // О сервере
   html += section('about', '', head(c.about, 'about') +
     '<div class="grid grid--4">' + list(c.about.items, function (it) {
@@ -263,6 +267,103 @@
     }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
     Array.prototype.forEach.call(reveals, function (el) { io.observe(el); });
   }
+
+  /* ---------- статистика сервера ---------- */
+  (function () {
+    var L = c.live, body = document.getElementById('live-body');
+    if (!body || !L || !L.url) return;
+    var FID = { order: 'order', chaos: 'chaos', outcast: 'outcasts' };
+    function when(iso, withDate) {
+      var d = new Date(iso);
+      if (isNaN(d)) return '';
+      try {
+        return d.toLocaleString('ru-RU', withDate
+          ? { timeZone: c.battle.timeZone, day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' }
+          : { timeZone: c.battle.timeZone, hour: '2-digit', minute: '2-digit' });
+      } catch (e) { return d.toLocaleString('ru-RU'); }
+    }
+    function tag(id, name) { return '<span class="tag tag--' + esc(FID[id] || id) + '">' + esc(name) + '</span>'; }
+    function bar(pct, id) { return '<i class="live__bar"><u class="bg-' + esc(FID[id] || id) + '" style="width:' + Math.max(0, Math.min(100, pct)) + '%"></u></i>'; }
+    function card(icon, title, inner) {
+      return '<article class="slab live__card"><div class="event__top"><div class="medal" aria-hidden="true">' + icon + '</div><h3>' + esc(title) + '</h3></div>' + inner + '</article>';
+    }
+    function names(list) { var o = {}; list.forEach(function (f) { o[f.id] = f.name; }); return o; }
+    function render(d) {
+      var ago = Math.max(0, Math.round((Date.now() - new Date(d.updated).getTime()) / 60000));
+      var stale = ago > (d.intervalMinutes || 15) * 2 + 10;
+      var s = d.server, h = '';
+      h += '<p class="live__status ' + (stale ? 'is-stale' : 'is-ok') + '"><i></i>' +
+        esc(L.updated) + ': ' + (ago < 1 ? esc(L.justNow) : ago + ' ' + esc(L.minAgo)) +
+        (stale ? ' · ' + esc(L.stale) : '') + '</p>';
+      h += '<div class="live__tiles">' +
+        '<div class="slab live__tile"><b>' + s.players + '</b><span>' + esc(L.tiles.online) + '</span></div>' +
+        '<div class="slab live__tile"><b>' + s.peakToday + '</b><span>' + esc(L.tiles.peakToday) + '</span></div>' +
+        '<div class="slab live__tile"><b>' + s.peakAll + '</b><span>' + esc(L.tiles.peakAll) + (s.peakAllDate ? ' · ' + esc(s.peakAllDate.split('-').reverse().join('.')) : '') + '</span></div>' +
+        '<div class="slab live__tile"><b>' + s.characters + '</b><span>' + esc(L.characters) + ' · ' + s.accounts + ' ' + esc(L.accounts) + '</span></div>' +
+      '</div>';
+      var up = s.uptimeMinutes, upText = (up >= 1440 ? Math.floor(up / 1440) + ' д ' : '') + (Math.floor(up / 60) % 24) + ' ч ' + (up % 60) + ' мин';
+      h += '<p class="live__uptime">' + esc(L.uptime) + ' ' + esc(upText) + '</p>';
+
+      var fn = names(d.factions.list), cards = '';
+      // мост
+      var br = d.bridge, bi = '';
+      bi += br.active ? '<p class="live__big live__hot">' + esc(L.bridge.live) + '</p><p class="live__score">' + tag('order', fn.order) + ' <b>' + br.orderScore + '</b> : <b>' + br.chaosScore + '</b> ' + tag('chaos', fn.chaos) + '</p>'
+        : '<p>' + esc(L.bridge.next) + ' <b>' + esc(br.time) + '</b></p>';
+      bi += '<p class="live__row">' + esc(L.bridge.keepers) + ': ' + (br.keepers ? tag(br.keepers, br.keepersName) + ' ' + esc(L.bridge.until) + ' ' + esc(when(br.keepersUntil, true)) : esc(L.bridge.none)) + '</p>';
+      cards += card('🌉', L.bridge.title, bi);
+      // фракции
+      var tot = d.factions.total || 0, fi = '';
+      d.factions.list.forEach(function (f) {
+        var pct = tot ? Math.round(f.active / tot * 100) : 0;
+        fi += '<div class="live__line">' + tag(f.id, f.name) + bar(pct, f.id) + '<b>' + f.active + '</b></div>';
+      });
+      fi += '<p class="live__note">' + esc(L.factions.note.replace('{days}', d.factions.days)) + '</p>';
+      cards += card('⚔️', L.factions.title, fi);
+      // кампания
+      var cp = d.campaign, ci = '';
+      cp.factions.forEach(function (f) {
+        ci += '<div class="live__line">' + tag(f.id, f.name) + bar(f.score, f.id) + '<b>' + f.score + '%</b></div>';
+        if (f.goals.length) ci += '<ul class="live__goals">' + list(f.goals, function (g) { return '<li>' + esc(g.text) + ' <b>' + Math.min(g.value, g.target) + '/' + g.target + '</b></li>'; }) + '</ul>';
+      });
+      if (!cp.factions.some(function (f) { return f.goals.length; })) ci += '<p class="live__note">' + esc(L.campaign.noGoals) + '</p>';
+      ci += '<p class="live__note">' + esc(L.campaign.ends) + ': ' + esc(when(cp.ends, true)) + (cp.champion ? ' · ' + esc(L.campaign.champion) + ': ' + tag(cp.champion, fn[cp.champion]) : '') + '</p>';
+      cards += card('🏴', L.campaign.title, ci);
+      // рейтинг
+      var rt = d.rating, ri = '<p class="live__row">' + esc(L.rating.season) + ' ' + rt.season + (rt.seasonEnds ? ' · ' + esc(L.rating.ends) + ': ' + esc(when(rt.seasonEnds, true)) : '') + '</p>';
+      ri += rt.top.length ? '<ol class="live__top">' + list(rt.top, function (p) {
+        return '<li><span class="live__name">' + esc(p.name) + '</span>' + (p.faction ? tag(p.faction, fn[p.faction] || '') : '') + '<b>' + p.points + '</b></li>';
+      }) + '</ol>' : '<p class="live__note">' + esc(L.rating.empty) + '</p>';
+      if (rt.champion) ri += '<p class="live__row">👑 ' + esc(L.rating.champion) + ': <b>' + esc(rt.champion) + '</b></p>';
+      cards += card('🏆', L.rating.title, ri);
+      // дуэли
+      var du = d.duels, di = du.top.length ? '<ol class="live__top">' + list(du.top, function (p) {
+        return '<li><span class="live__name">' + esc(p.name) + '</span><small>' + p.wins + ' / ' + p.losses + '</small><b>' + p.elo + '</b></li>';
+      }) + '</ol><p class="live__note">Эло · ' + esc(L.duels.record) + '</p>' : '<p class="live__note">' + esc(L.duels.empty) + '</p>';
+      cards += card('🤺', L.duels.title, di);
+      // мир
+      var w = d.world, wi = '<p class="live__row">' + esc(L.world.holiday) + ': ' + (w.holiday ? '<b>' + esc(w.holiday) + '</b>' : esc(L.world.noHoliday)) + '</p>';
+      wi += '<p class="live__row">' + esc(L.world.rift) + ': ' + esc((L.rift[w.rift.state] || w.rift.state).replace('{kind}', w.rift.kind || '')) + '</p>';
+      wi += '<ul class="live__points">' + list(w.tradePoints, function (t) {
+        return '<li><span>' + esc(t.name) + '</span>' + (t.owner ? tag(t.owner, fn[t.owner]) : '<em>' + esc(L.world.free) + '</em>') + '</li>';
+      }) + '</ul>';
+      cards += card('🗺️', L.world.title, wi);
+      h += '<div class="grid grid--3 live__cards">' + cards + '</div>';
+      body.innerHTML = h;
+    }
+    function load() {
+      var x = new XMLHttpRequest();
+      x.open('GET', L.url + '?t=' + Math.floor(Date.now() / 300000));
+      x.timeout = 15000;
+      x.onload = function () {
+        try { if (x.status !== 200) throw 0; render(JSON.parse(x.responseText)); }
+        catch (e) { body.innerHTML = '<p class="live__msg">' + esc(L.failed) + '</p>'; }
+      };
+      x.onerror = x.ontimeout = function () { body.innerHTML = '<p class="live__msg">' + esc(L.failed) + '</p>'; };
+      x.send();
+    }
+    load();
+    setInterval(load, 5 * 60000);
+  })();
 
   /* ---------- время в часовом поясе сервера ---------- */
   var TZ = b.timeZone, dtf;

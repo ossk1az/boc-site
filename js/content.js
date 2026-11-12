@@ -28,6 +28,7 @@ window.content = {
       { text: "Фракции", href: "#factions" },
       { text: "Классы", href: "#classes" },
       { text: "События", href: "#events" },
+      { text: "Статистика", href: "#live" },
       { text: "Как начать", href: "#start" },
       { text: "Правила", href: "#rules" }
     ],
@@ -57,6 +58,36 @@ window.content = {
     schedule: "Каждый день в 20:00 по Киеву (Europe/Kyiv)",
     localPrefix: "по вашему времени —",
     units: ["часов", "минут", "секунд"]
+  },
+
+  /* ---------- СТАТИСТИКА СЕРВЕРА ----------
+     Данные сервер присылает сам раз в 15 минут (ветка stats этого репозитория). Здесь только подписи. */
+  live: {
+    title: "Сервер сейчас",
+    lead: "Живая статистика Bridge of Conflict. Сервер обновляет её сам каждые 15 минут.",
+    url: "https://raw.githubusercontent.com/ossk1az/boc-site/stats/stats.json",
+    loading: "Загружаем статистику…",
+    failed: "Статистика сейчас недоступна. Загляни позже.",
+    updated: "Обновлено",
+    stale: "Давно нет свежих данных — возможно, сервер перезапускается.",
+    minAgo: "мин назад",
+    justNow: "только что",
+    tiles: { online: "Онлайн сейчас", peakToday: "Рекорд сегодня", peakAll: "Рекорд за всё время", players: "Игроки" },
+    accounts: "аккаунтов", characters: "персонажей", uptime: "Без перезапуска:",
+    bridge: { title: "Битва за мост", live: "Идёт прямо сейчас!", next: "Следующая — каждый день в", keepers: "Хранители моста", until: "до", none: "Хранителей сейчас нет" },
+    factions: { title: "Фракции", note: "Активные аккаунты за последние {days} дней" },
+    campaign: { title: "Кампания недели", ends: "Итоги", champion: "Чемпион прошлой недели", noGoals: "Цели появятся в понедельник." },
+    rating: { title: "Рейтинг сезона", season: "Сезон", ends: "Конец сезона", champion: "Champion of the Bridge", empty: "В этом сезоне очков ещё ни у кого нет.", points: "очк." },
+    duels: { title: "Дуэли месяца", empty: "В этом месяце дуэлей ещё не было.", record: "побед / поражений" },
+    world: { title: "Мир", tradePoints: "Торговые точки", free: "ничья", holiday: "Праздник", noHoliday: "Сейчас праздника нет", rift: "Разлом" },
+    rift: {
+      idle: "спит. Следующий: {kind}",
+      waiting: "{kind} ждёт, когда его откроют",
+      countdown: "{kind} открывается",
+      active: "{kind}: идёт бой",
+      breach: "ПРОРЫВ! {kind}: твари бродят по округе",
+      claiming: "{kind}: босс повержен, делят добычу"
+    }
   },
 
   /* ---------- О СЕРВЕРЕ ---------- */
