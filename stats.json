@@ -1,0 +1,13 @@
+{
+"version":1,
+"updated":"2026-11-28T20:17:12+02:00",
+"intervalMinutes":15,
+"server":{"players":9,"peakToday":10,"peakAll":11,"peakAllDate":"2026-11-26","uptimeMinutes":184,"accounts":26,"characters":29},
+"factions":{"days":7,"total":5,"list":[{"id":"order","name":"Орден","active":3},{"id":"chaos","name":"Хаос","active":0},{"id":"outcast","name":"Изгои","active":2}]},
+"bridge":{"active":true,"orderScore":114,"chaosScore":27,"keepers":null,"keepersName":null,"keepersUntil":null,"time":"20:00"},
+"campaign":{"week":"2026-11-23","ends":"2026-11-30T00:00:00+02:00","champion":"order","lastResult":"2026-11-16: Орден 22%, Хаос 0%, Изгои 3% - победа: Орден","factions":[{"id":"order","name":"Орден","score":50,"goals":[{"text":"Победить 15 стражников каравана","value":8,"target":15},{"text":"Сорвать 2 чужих контракта охраны каравана","value":0,"target":2},{"text":"Победить 60 бойцов вражеских патрулей","value":58,"target":60}]},{"id":"chaos","name":"Хаос","score":0,"goals":[{"text":"Победить 15 стражников каравана","value":0,"target":15},{"text":"Сорвать 2 чужих контракта охраны каравана","value":0,"target":2},{"text":"Победить 60 бойцов вражеских патрулей","value":0,"target":60}]},{"id":"outcast","name":"Изгои","score":0,"goals":[{"text":"Уничтожить 2 осколка души","value":0,"target":2},{"text":"Ограбить 6 тюков каравана","value":0,"target":6},{"text":"Сдать скупщику 15 воровских жетонов","value":0,"target":15}]}]},
+"rating":{"season":1,"seasonEnds":"2026-12-01T02:00:00+02:00","champion":null,"top":[{"name":"Andrey","faction":"order","points":3050},{"name":"Commodus","faction":"order","points":2070},{"name":"Zak","faction":"order","points":818}]},
+"duels":{"month":"2026-11","top":[{"name":"Admin","elo":1016,"wins":1,"losses":0},{"name":"Chaos","elo":1016,"wins":1,"losses":0},{"name":"Test","elo":984,"wins":0,"losses":1}]},
+"world":{"tradePoints":[{"name":"Кузница","owner":"chaos"},{"name":"Магическая лавка","owner":"chaos"},{"name":"Кожевенная лавка","owner":"order"},{"name":"Бронная мастерская","owner":"order"},{"name":"Портняжная мастерская","owner":"chaos"},{"name":"Ювелирная лавка","owner":"chaos"},{"name":"Оружейная","owner":"order"},{"name":"Конюшня","owner":"order"},{"name":"Таверна","owner":"chaos"},{"name":"Лодочная мастерская","owner":"order"},{"name":"Постоялый двор","owner":"chaos"},{"name":"Лучная мастерская","owner":"chaos"}],"holiday":null,"rift":{"state":"idle","kind":"Паучье гнездо"}},
+"dungeon":{"enabled":true,"state":"idle","next":"2026-11-29T18:00:00+02:00"}
+}
