@@ -1,0 +1,12 @@
+{
+"version":1,
+"updated":"2026-11-14T16:43:55+02:00",
+"intervalMinutes":15,
+"server":{"players":1,"peakToday":2,"peakAll":4,"peakAllDate":"2026-11-12","uptimeMinutes":153,"accounts":12,"characters":12},
+"factions":{"days":7,"total":11,"list":[{"id":"order","name":"Орден","active":6},{"id":"chaos","name":"Хаос","active":3},{"id":"outcast","name":"Изгои","active":2}]},
+"bridge":{"active":false,"orderScore":0,"chaosScore":0,"keepers":null,"keepersName":null,"keepersUntil":null,"time":"20:00"},
+"campaign":{"week":"2026-11-09","ends":"2026-11-16T00:00:00+02:00","champion":null,"lastResult":"","factions":[{"id":"order","name":"Орден","score":43,"goals":[{"text":"Набрать 15 участий во взятии моста","value":3,"target":15},{"text":"Победить 15 стражников каравана","value":51,"target":15},{"text":"Победить 25 врагов на мосту","value":2,"target":25}]},{"id":"chaos","name":"Хаос","score":11,"goals":[{"text":"Набрать 15 участий во взятии моста","value":3,"target":15},{"text":"Победить 15 стражников каравана","value":2,"target":15},{"text":"Победить 25 врагов на мосту","value":0,"target":25}]},{"id":"outcast","name":"Изгои","score":20,"goals":[{"text":"Сдать скупщику 15 воровских жетонов","value":0,"target":15},{"text":"Совершить 10 налётов на торговые точки","value":5,"target":10},{"text":"Победить 20 бойцов Ордена и Хаоса","value":2,"target":20}]}]},
+"rating":{"season":1,"seasonEnds":"2026-12-01T02:00:00+02:00","champion":null,"top":[{"name":"Commodus","faction":"order","points":1777},{"name":"Andrey","faction":"order","points":1455},{"name":"Kornel","faction":"chaos","points":221}]},
+"duels":{"month":"2026-11","top":[{"name":"Admin","elo":1016,"wins":1,"losses":0},{"name":"Chaos","elo":1016,"wins":1,"losses":0},{"name":"Test","elo":984,"wins":0,"losses":1}]},
+"world":{"tradePoints":[{"name":"Кузница","owner":"order"},{"name":"Магическая лавка","owner":"order"},{"name":"Кожевенная лавка","owner":"order"},{"name":"Бронная мастерская","owner":"order"},{"name":"Портняжная мастерская","owner":"order"},{"name":"Ювелирная лавка","owner":"order"}],"holiday":null,"rift":{"state":"idle","kind":"Разлом Стихий"}}
+}
