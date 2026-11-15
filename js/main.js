@@ -191,7 +191,8 @@
       '<ol class="steps">' + list(s.steps, function (st, i) {
         return '<li class="slab step reveal"><span class="step__n" aria-hidden="true">' + (i + 1) + '</span>' +
           '<div><h3>' + esc(st.title) + '</h3><p>' + fmt(st.text) + '</p>' +
-          (i === 0 && !isTodo(c.links.client) ? '<p><a class="btn btn--ghost btn--sm" ' + linkAttrs(c.links.client) + '>' + esc(c.footer.client) + '</a></p>' : '') +
+          (i === 0 && !isTodo(c.links.client) ? '<p><a class="btn btn--ghost btn--sm" ' + linkAttrs(c.links.client) + '>' + esc(c.footer.client) + '</a>' +
+            (c.links.orionGuide ? ' <a class="btn btn--ghost btn--sm" href="' + esc(c.links.orionGuide) + '">' + esc(c.header.orionGuide) + '</a>' : '') + '</p>' : '') +
           '</div></li>';
       }) + '</ol>' +
       '<aside class="slab commands reveal"><h3>' + esc(s.commandsTitle) + '</h3>' +

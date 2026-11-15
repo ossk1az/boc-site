@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Клиент Орион — как настроить | Bridge of Conflict</title>
+  <meta name="description" content="Пошаговая настройка OrionUO (Orion Launcher) для сервера Bridge of Conflict: файлы игры, версия клиента 7.0.102.3, No Crypt, адрес сервера.">
+  <meta name="theme-color" content="#0f0c0a">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Cormorant:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=202611151030">
+  <style>
+    .guide { padding: 40px 0 80px; }
+    .guide__top { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+    .guide h1 { font: 700 clamp(1.9rem, 5vw, 2.8rem)/1.15 var(--head); color: var(--gold-hi); margin: 32px 0 10px; }
+    .guide__lead { color: var(--muted); max-width: 760px; }
+    .guide__facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 26px 0 34px; }
+    .guide__facts div { padding: 14px 16px; }
+    .guide__facts b { display: block; color: var(--muted); font: 500 .8rem/1.4 var(--body); text-transform: uppercase; letter-spacing: .06em; }
+    .guide__facts span { color: var(--gold-hi); font-weight: 600; overflow-wrap: anywhere; }
+    .gstep { display: grid; grid-template-columns: 1fr; gap: 16px; padding: 22px; margin-bottom: 18px; }
+    .gstep__head { display: flex; gap: 16px; align-items: flex-start; }
+    .gstep h2 { font: 700 1.45rem/1.25 var(--head); color: var(--text); margin-bottom: 6px; }
+    .gstep p, .gstep li { color: var(--muted); }
+    .gstep ul { padding-left: 20px; margin-top: 6px; }
+    .gstep p + p { margin-top: 8px; }
+    .gstep img { border: 1px solid var(--line); border-radius: 6px; width: 100%; max-width: 845px; height: auto; }
+    .gstep figure { display: grid; gap: 6px; }
+    .gstep figcaption { color: var(--muted); font-size: .85rem; }
+    .shots { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+    .warn { border-left: 3px solid var(--fire); padding: 10px 14px; background: rgba(226, 112, 42, .08); color: var(--text); border-radius: 4px; }
+    @media (max-width: 420px) { .gstep { padding: 16px; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="guide__top">
+      <a class="logo" href="index.html">BRIDGE OF CONFLICT</a>
+      <a class="btn btn--ghost btn--sm" href="index.html#start">На главную</a>
+    </div>
+
+    <main class="guide">
+      <h1>Настройка клиента Орион</h1>
+      <p class="guide__lead">Пошагово: как играть на Bridge of Conflict через OrionUO (Orion Launcher), без файла <code>Play_BoC.cmd</code>. Займёт 5–10 минут.</p>
+
+      <div class="guide__facts">
+        <div class="slab"><b>Адрес сервера</b><span>46.175.147.143</span></div>
+        <div class="slab"><b>Порт</b><span>2593</span></div>
+        <div class="slab"><b>Версия клиента</b><span>7.0.102.3</span></div>
+        <div class="slab"><b>Шифрование</b><span>No Crypt</span></div>
+      </div>
+
+      <section class="slab gstep">
+        <div class="gstep__head"><span class="step__n" aria-hidden="true">1</span><div>
+          <h2>Скачайте файлы игры</h2>
+          <p>Скачайте наш архив клиента и распакуйте его, например, в <code>D:\Games\Bridge of Conflict</code>. Не распаковывайте в <code>Program Files</code>: Windows не даст клиенту записывать настройки.</p>
+          <p>Файлы игры лежат в папке <code>BoC_Client\UO</code>. Её и нужно будет указать Ориону. Запускать <code>Play_BoC.cmd</code> не нужно.</p>
+          <p><a class="btn btn--ghost btn--sm" href="https://github.com/ossk1az/boc-site/releases/latest/download/BoC_Client.zip" target="_blank" rel="noopener">Скачать файлы игры</a></p>
+        </div></div>
+      </section>
+
+      <section class="slab gstep">
+        <div class="gstep__head"><span class="step__n" aria-hidden="true">2</span><div>
+          <h2>Скачайте Orion Launcher</h2>
+          <p>Скачайте лаунчер с официальной страницы проекта OrionUO и распакуйте в отдельную папку, например <code>D:\Games\Bridge of Conflict\Orion Launcher</code>. Запустите <code>OrionLauncher.exe</code>.</p>
+          <p><a class="btn btn--ghost btn--sm" href="http://orionuo.online/Launcher.html" target="_blank" rel="noopener">Orion Launcher</a>
+             <a href="https://github.com/Hotride/OrionUO" target="_blank" rel="noopener">страница проекта на GitHub</a></p>
+        </div></div>
+      </section>
+
+      <section class="slab gstep">
+        <div class="gstep__head"><span class="step__n" aria-hidden="true">3</span><div>
+          <h2>Укажите папки и откройте настройку версии</h2>
+          <ul>
+            <li><b>Путь к файлам UO</b> — папка с файлами игры из шага 1 (<code>...\BoC_Client\UO</code>).</li>
+            <li><b>Путь к Ориону</b> — папка лаунчера из шага 2.</li>
+            <li><b>Язык</b> — Русский.</li>
+          </ul>
+          <p>Затем нажмите <b>«Настроить версию клиента»</b>.</p>
+        </div></div>
+        <figure><img src="img/orion/1-main.jpg" alt="Главное окно Orion Launcher, стрелка на кнопке «Настроить версию клиента»" loading="lazy" width="841" height="705"></figure>
+      </section>
+
+      <section class="slab gstep">
+        <div class="gstep__head"><span class="step__n" aria-hidden="true">4</span><div>
+          <h2>Откройте редактор</h2>
+          <p>В списке серверов выберите строку <b>«[Открыть редактор]»</b>. Нашего сервера в этом списке нет, настройку создаём сами.</p>
+        </div></div>
+        <figure><img src="img/orion/2-editor.jpg" alt="Диалог выбора конфигурации, стрелка на «[Открыть редактор]»" loading="lazy"></figure>
+      </section>
+
+      <section class="slab gstep">
+        <div class="gstep__head"><span class="step__n" aria-hidden="true">5</span><div>
+          <h2>Версия 7.0.102.3 и расширенный режим</h2>
+          <p>В поле <b>«Версия клиента»</b> выберите <code>7.0.102.3</code> и нажмите <b>«Расширенный режим»</b>.</p>
+        </div></div>
+        <figure><img src="img/orion/3-extended.jpg" alt="Версия клиента 7.0.102.3, стрелка на «Расширенный режим»" loading="lazy"></figure>
+      </section>
+
+      <section class="slab gstep">
+        <div class="gstep__head"><span class="step__n" aria-hidden="true">6</span><div>
+          <h2>Без шифрования — и «Создать»</h2>
+          <ul>
+            <li><b>Тип шифрования</b> — <code>No Crypt</code>. Это главное: с шифрованием сервер не пустит.</li>
+            <li><b>Версия протокола</b> — <code>7.0.100.0</code> (подставится сама).</li>
+            <li>Размеры карт и ключи не трогайте.</li>
+          </ul>
+          <p>Нажмите <b>«Создать»</b>. Лаунчер сохранит файл <code>Client.cuo</code> в папку с файлами игры — нажмите OK.</p>
+        </div></div>
+        <div class="shots">
+          <figure><img src="img/orion/4-nocrypt.jpg" alt="Расширенный режим: тип шифрования No Crypt" loading="lazy"><figcaption>Тип шифрования: No Crypt</figcaption></figure>
+          <figure><img src="img/orion/5-create.jpg" alt="Кнопка «Создать»" loading="lazy"><figcaption>Затем «Создать»</figcaption></figure>
+          <figure><img src="img/orion/6-saved.jpg" alt="Сообщение «Конфигурация сохранена»" loading="lazy"><figcaption>Конфигурация сохранена — OK</figcaption></figure>
+        </div>
+      </section>
+
+      <section class="slab gstep">
+        <div class="gstep__head"><span class="step__n" aria-hidden="true">7</span><div>
+          <h2>Профиль сервера</h2>
+          <p>Нажмите <b>«Добавить сервер (группа профилей)»</b> и назовите группу, например, <code>Bridge of Conflict</code>. Затем <b>«Добавить профиль»</b> и в окне профиля укажите:</p>
+          <ul>
+            <li>адрес сервера <code>46.175.147.143</code>, порт <code>2593</code>;</li>
+            <li>логин и пароль вашего аккаунта (если аккаунта ещё нет — придумайте, он создастся при первом входе).</li>
+          </ul>
+          <p>Сохраните профиль и выберите его в списке. Изменить профиль потом можно кнопкой <b>«Редактировать профиль»</b>.</p>
+        </div></div>
+        <figure><img src="img/orion/7-profile.jpg" alt="Список профилей, стрелка на профиле" loading="lazy"></figure>
+      </section>
+
+      <section class="slab gstep">
+        <div class="gstep__head"><span class="step__n" aria-hidden="true">8</span><div>
+          <h2>Запуск и первый вход</h2>
+          <p>Выберите профиль и нажмите <b>«Запустить»</b>. На экране входа введите логин и пароль: при первом входе аккаунт создастся сам. До 3 персонажей на аккаунт.</p>
+          <p>Дальше выберите фракцию и класс — получите готовый набор и 1000 золота. Новичку помогает <code>[Guide</code>, расписание — <code>[события</code>, новости — <code>[news</code>. В чат пишут с запятой в начале строки: <code>,привет всем</code>.</p>
+        </div></div>
+      </section>
+
+      <section class="slab gstep">
+        <div class="gstep__head"><span class="step__n" aria-hidden="true">?</span><div>
+          <h2>Если не получается</h2>
+          <ul>
+            <li><b>Не подключается или сразу отключает</b> — проверьте шаг 6: шифрование должно быть <code>No Crypt</code>, версия <code>7.0.102.3</code>. Проверьте адрес и порт в профиле.</li>
+            <li><b>Пишет, что не найдены файлы</b> — «Путь к файлам UO» должен вести в папку, где лежат <code>tiledata.mul</code> и <code>map0.mul</code> (<code>BoC_Client\UO</code>).</li>
+            <li><b>Антивирус ругается на лаунчер</b> — добавьте папку Ориона в исключения или скачайте лаунчер заново с официальной страницы.</li>
+            <li>Не помогло — пишите в <a href="https://discord.gg/6AzDWFs2Xu" target="_blank" rel="noopener">Discord</a>, приложите скриншот ошибки.</li>
+          </ul>
+        </div></div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
