@@ -32,6 +32,11 @@
     .shots { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
     .warn { border-left: 3px solid var(--fire); padding: 10px 14px; background: rgba(226, 112, 42, .08); color: var(--text); border-radius: 4px; }
     @media (max-width: 420px) { .gstep { padding: 16px; } }
+    .gstep img { cursor: zoom-in; }
+    .lightbox { position: fixed; inset: 0; z-index: 100; display: none; align-items: center; justify-content: center; padding: 16px; background: rgba(8, 6, 5, .92); cursor: zoom-out; }
+    .lightbox.is-open { display: flex; }
+    .lightbox img { max-width: 100%; max-height: 100%; width: auto; height: auto; border: 1px solid var(--line); border-radius: 6px; }
+    .gstep figcaption::after { content: " · нажмите, чтобы увеличить"; opacity: .7; }
   </style>
 </head>
 <body>
@@ -78,14 +83,19 @@
             <li><b>Путь к Ориону</b> — папка лаунчера из шага 2.</li>
             <li><b>Язык</b> — Русский.</li>
           </ul>
-          <p>Нажмите <b>«Добавить сервер (группа профилей)»</b> и назовите группу, например, <code>Bridge of Conflict</code>. Затем <b>«Добавить профиль»</b> и в окне профиля укажите:</p>
+          <p>Нажмите <b>«Добавить сервер (группа профилей)»</b> и назовите группу, например, <code>Bridge of Conflict</code>. Затем нажмите <b>«Добавить профиль»</b> и заполните окно профиля:</p>
           <ul>
-            <li>адрес сервера <code>46.175.147.143</code>, порт <code>2593</code>;</li>
-            <li>логин и пароль вашего аккаунта (если аккаунта ещё нет — придумайте, он создастся при первом входе).</li>
+            <li><b>Имя</b> — любое, например имя вашего персонажа;</li>
+            <li><b>Адрес,порт</b> — <code>46.175.147.143,2593</code> (адрес и порт в одном поле, через запятую);</li>
+            <li><b>Аккаунт</b> и <b>Пароль</b> — ваши логин и пароль. Если аккаунта ещё нет, придумайте их: аккаунт создастся при первом входе;</li>
+            <li>остальные поля можно не трогать.</li>
           </ul>
-          <p>Сохраните профиль и выберите его в списке. Изменить профиль потом можно кнопкой <b>«Редактировать профиль»</b>.</p>
+          <p>Нажмите <b>OK</b> и выберите профиль в списке. Изменить его потом можно кнопкой <b>«Редактировать профиль»</b>.</p>
         </div></div>
-        <figure><img src="img/orion/7-profile.jpg" alt="Список профилей, стрелка на профиле" loading="lazy"></figure>
+        <div class="shots">
+          <figure><img src="img/orion/3-profile-edit.jpg" alt="Окно редактирования профиля: адрес 46.175.147.143,2593, аккаунт и пароль" loading="lazy"><figcaption>Окно профиля</figcaption></figure>
+          <figure><img src="img/orion/7-profile.jpg" alt="Список профилей, стрелка на профиле" loading="lazy"><figcaption>Профиль выбран в списке</figcaption></figure>
+        </div>
       </section>
 
       <section class="slab gstep">
@@ -150,5 +160,17 @@
       </section>
     </main>
   </div>
+  <div class="lightbox" id="lightbox" role="dialog" aria-label="Скриншот крупно"><img alt=""></div>
+  <script>
+    (function () {
+      var box = document.getElementById('lightbox'), big = box.querySelector('img');
+      document.querySelectorAll('.gstep img').forEach(function (img) {
+        img.addEventListener('click', function () { big.src = img.src; big.alt = img.alt; box.classList.add('is-open'); });
+      });
+      function close() { box.classList.remove('is-open'); big.removeAttribute('src'); }
+      box.addEventListener('click', close);
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+    })();
+  </script>
 </body>
 </html>
