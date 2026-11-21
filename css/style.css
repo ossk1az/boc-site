@@ -448,3 +448,24 @@ h4 { font: 600 .72rem/1.2 var(--body); letter-spacing: .14em; text-transform: up
 .live__cards { margin-top: 4px; }
 @media (max-width: 800px) { .live__tiles { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 420px) { .live__tile b { font-size: 1.9rem; } .live__goals { margin-left: 0; } .live__line { grid-template-columns: 80px 1fr 40px; } }
+
+/* ---------- подземелье ---------- */
+.dungeon__when { margin: -10px 0 22px; }
+.dungeon__sub { text-align: center; margin: 34px 0 16px; font-size: 1.5rem; }
+.bosses { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+.boss { padding: 14px 16px; display: flex; gap: 12px; align-items: center; }
+.boss__icon { font-size: 1.8rem; line-height: 1; }
+.boss b { display: block; font: 700 1.05rem/1.2 var(--head); color: var(--gold-hi); }
+.boss small { display: block; margin-top: 4px; color: var(--muted); font-size: .8rem; line-height: 1.35; }
+@media (max-width: 1000px) { .bosses { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .bosses { grid-template-columns: 1fr; } }
+.live__card--wide { grid-column: 1 / -1; }
+
+/* ---------- обновления ---------- */
+.updates details.is-extra { display: none; }
+#updates-body.is-all .updates details.is-extra { display: block; }
+.updates__text { padding: 0 20px 18px; color: var(--muted); overflow-wrap: anywhere; }
+.updates__text p { padding: 0; margin: 0 0 10px; }
+.updates__text b { color: var(--text); }
+.updates__text .bullets { margin: 0 0 10px; }
+.updates__more { text-align: center; margin-top: 18px; }

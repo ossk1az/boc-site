@@ -158,6 +158,28 @@
         '</div></article>';
     }) + '</div>');
 
+  // Подземелье
+  var dg = c.dungeon;
+  if (dg) {
+    html += section('dungeon', '', head(dg, 'dungeon') +
+      '<p class="note reveal dungeon__when">🕕 ' + fmt(dg.when) + '</p>' +
+      '<div class="grid grid--4">' + list(dg.items, function (it) {
+        return '<article class="slab tile reveal"><div class="medal" aria-hidden="true">' + it.icon + '</div>' +
+          '<h3>' + esc(it.title) + '</h3><p>' + fmt(it.text) + '</p></article>';
+      }) + '</div>' +
+      '<h3 class="dungeon__sub reveal">' + esc(dg.bossesTitle) + '</h3>' +
+      '<div class="bosses reveal">' + list(dg.bosses, function (b) {
+        return '<div class="slab boss"><span class="boss__icon" aria-hidden="true">' + b.icon + '</span><div><b>' + esc(b.name) + '</b><small>' + esc(b.text) + '</small></div></div>';
+      }) + '</div>' +
+      '<p class="note reveal">' + fmt(dg.reward) + '</p>');
+  }
+
+  // Обновления (список выкладывает сервер: updates.json)
+  if (c.updates) {
+    html += section('updates', 'section--alt', head(c.updates, 'updates') +
+      '<div id="updates-body" aria-live="polite"><p class="live__msg">' + esc(c.updates.loading) + '</p></div>');
+  }
+
   // Смерть и долг
   html += section('death', '', '<div class="parchment reveal">' +
     '<p class="parchment__kicker">' + esc(c.death.kicker) + '</p>' +
@@ -348,6 +370,23 @@
         return '<li><span>' + esc(t.name) + '</span>' + (t.owner ? tag(t.owner, fn[t.owner]) : '<em>' + esc(L.world.free) + '</em>') + '</li>';
       }) + '</ul>';
       cards += card('🗺️', L.world.title, wi);
+      // подземелье
+      var dn = d.dungeon, DL = L.dungeon;
+      if (dn && DL) {
+        var dd = '';
+        if (!dn.enabled) dd += '<p>' + esc(DL.off) + '</p>';
+        else {
+          dd += '<p class="live__big' + (dn.state !== 'idle' ? ' live__hot' : '') + '">' + esc(DL.states[dn.state] || dn.state) + '</p>';
+          if (dn.state === 'idle') dd += '<p class="live__row">' + esc(DL.next) + ': <b>' + esc(when(dn.next, true)) + '</b></p>';
+          if (dn.theme) dd += '<p class="live__row">' + esc(dn.state === 'idle' ? DL.today : DL.boss) + ': <b>' + esc(dn.boss) + '</b> · ' + esc(dn.theme) + '</p>' +
+            '<p class="live__row">' + esc(DL.task) + ': ' + esc(dn.task) + '</p>';
+          if (dn.wings) dd += '<ul class="live__points">' + list(dn.wings, function (wg) {
+            return '<li>' + tag(wg.id, DL.wingNames[wg.id] || wg.id) + '<span>' + esc(wg.text) + '</span></li>';
+          }) + '</ul>';
+          if (dn.chest) dd += '<p class="live__row">' + esc(DL.chest) + ': ' + tag(dn.chest, fn[dn.chest] || dn.chest) + '</p>';
+        }
+        cards = card('🏰', DL.title, dd).replace('live__card"', 'live__card live__card--wide"') + cards;
+      }
       h += '<div class="grid grid--3 live__cards">' + cards + '</div>';
       body.innerHTML = h;
     }
@@ -364,6 +403,48 @@
     }
     load();
     setInterval(load, 5 * 60000);
+  })();
+
+  /* ---------- обновления сервера ---------- */
+  (function () {
+    var U = c.updates, box = document.getElementById('updates-body');
+    if (!U || !box) return;
+    // **жирный** и строки "- " из новостей игры (Discord-разметка)
+    function md(t) {
+      var out = '', ul = false;
+      String(t || '').split('\n').forEach(function (line) {
+        var l = line.trim(), item = /^[-•]\s+/.test(l);
+        var html = esc(item ? l.replace(/^[-•]\s+/, '') : l).replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>');
+        if (item) { if (!ul) { out += '<ul class="bullets">'; ul = true; } out += '<li>' + html + '</li>'; return; }
+        if (ul) { out += '</ul>'; ul = false; }
+        if (l) out += '<p>' + html + '</p>';
+      });
+      return out + (ul ? '</ul>' : '');
+    }
+    function render(d) {
+      var e = (d.entries || []).slice().reverse();
+      if (!e.length) { box.innerHTML = '<p class="live__msg">' + esc(U.failed) + '</p>'; return; }
+      var h = '<div class="accordion updates">' + list(e, function (u, i) {
+        return '<details class="slab' + (i >= U.shown ? ' is-extra' : '') + '"' + (i === 0 ? ' open' : '') + '><summary><span class="acc__n">' + esc(u.id) + '</span>' +
+          esc(u.title || U.label + ' ' + u.id) + '</summary><div class="updates__text">' + md(u.text) + '</div></details>';
+      }) + '</div>';
+      if (e.length > U.shown) h += '<p class="updates__more"><button class="btn btn--ghost btn--sm" type="button" id="updates-more">' + esc(U.more) + ' (' + e.length + ')</button></p>';
+      box.innerHTML = h;
+      var btn = document.getElementById('updates-more');
+      if (btn) btn.addEventListener('click', function () {
+        var open = box.classList.toggle('is-all');
+        btn.textContent = open ? U.less : U.more + ' (' + e.length + ')';
+      });
+    }
+    var x = new XMLHttpRequest();
+    x.open('GET', U.url + '?t=' + Math.floor(Date.now() / 300000));
+    x.timeout = 15000;
+    x.onload = function () {
+      try { if (x.status !== 200) throw 0; render(JSON.parse(x.responseText)); }
+      catch (err) { box.innerHTML = '<p class="live__msg">' + esc(U.failed) + '</p>'; }
+    };
+    x.onerror = x.ontimeout = function () { box.innerHTML = '<p class="live__msg">' + esc(U.failed) + '</p>'; };
+    x.send();
   })();
 
   /* ---------- время в часовом поясе сервера ---------- */
