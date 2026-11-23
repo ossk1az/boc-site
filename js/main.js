@@ -245,6 +245,8 @@
     '<p class="footer__links">' +
       '<a ' + linkAttrs(c.links.discord) + '>' + esc(ft.discord) + '</a>' +
       '<a ' + linkAttrs(c.links.client) + '>' + esc(ft.client) + '</a>' +
+      '<a href="privacy.html">Конфиденциальность</a>' +
+      '<a href="terms.html">Условия</a>' +
       '<a href="#top">' + esc(c.ui.toTop) + ' ↑</a></p>' +
     '<p>' + esc(ft.time) + '. ' + esc(ft.timeNow) + ' <b id="server-time">--:--</b></p>' +
     '<p class="footer__legal">' + fmt(ft.legal) + '</p></div>';
