@@ -242,6 +242,11 @@
   var ft = c.footer;
   document.getElementById('footer').innerHTML = '<div class="wrap">' +
     '<a class="logo" href="#top">' + esc(h.logo) + '</a>' + ORNAMENT +
+    // YouTube-канал сервера: значок YouTube + ссылка (нужно для проверки YouTube API у Google)
+    '<p class="footer__yt"><a class="yt-link" ' + linkAttrs(c.links.youtube) + '>' +
+      '<svg class="yt-icon" viewBox="0 0 28 20" aria-hidden="true"><rect width="28" height="20" rx="5" fill="#FF0000"/>' +
+      '<path d="M11 5.5v9l8-4.5z" fill="#FFF"/></svg>' +
+      '<span>' + esc(ft.youtube) + '</span></a></p>' +
     '<p class="footer__links">' +
       '<a ' + linkAttrs(c.links.discord) + '>' + esc(ft.discord) + '</a>' +
       '<a ' + linkAttrs(c.links.client) + '>' + esc(ft.client) + '</a>' +

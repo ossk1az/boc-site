@@ -18,7 +18,8 @@ window.content = {
     discord: "https://discord.gg/6AzDWFs2Xu",
     client: "https://github.com/ossk1az/boc-site/releases/latest/download/BoC_Client.zip", // всегда последняя версия клиента
     server: "46.175.147.143:2593",
-    orionGuide: "orion.html" // пошаговый гайд по клиенту Орион
+    orionGuide: "orion.html", // пошаговый гайд по клиенту Орион
+    youtube: "https://www.youtube.com/@bridgeofconflict" // YouTube-канал сервера
   },
 
   /* ---------- ШАПКА ---------- */
@@ -419,9 +420,10 @@ window.content = {
   footer: {
     discord: "Discord",
     client: "Скачать клиент",
+    youtube: "Наш канал на YouTube",
     time: "Время сервера — Киев (Europe/Kyiv)",
     timeNow: "Сейчас на сервере:",
-    legal: "Ultima Online — торговая марка Electronic Arts. Bridge of Conflict — некоммерческий фанатский сервер."
+    legal: "Ultima Online — торговая марка Electronic Arts. YouTube — торговая марка Google LLC. Bridge of Conflict — некоммерческий фанатский сервер."
   },
 
   /* ---------- МЕЛОЧИ ИНТЕРФЕЙСА ---------- */
